@@ -6,19 +6,23 @@ import "react-toastify/dist/ReactToastify.css";
 import Nav from "./components/Nav/Nav";
 import Home from "./components/Home/Home";
 import Auth from "./components/Admin/AdminAuth/AdminAuth";
+import XLNav from "./components/Nav/XLNav";
+import Cart from "./components/cart/Cart";
 
 function App() {
   return (
-    <div className="">
+    <Router>
       <ToastContainer />
-      <Nav />
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/admin" element={<Auth />} />
-        </Routes>
-      </Router>
-    </div>
+      <div>
+        <Nav />
+        <XLNav />
+      </div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/admin" element={<Auth />} />
+        <Route path="/cart" element={<Cart />} />
+      </Routes>
+    </Router>
   );
 }
 

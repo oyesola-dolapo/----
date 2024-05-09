@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export default function Nav() {
   const [search, setSearch] = useState(false);
@@ -7,7 +8,7 @@ export default function Nav() {
   const navs = [
     {
       title: "Home",
-      link: "",
+      link: "/",
     },
     {
       title: "Shop Latest",
@@ -49,8 +50,8 @@ export default function Nav() {
   }, [menu]);
 
   return (
-    <div className="relative">
-      <nav className="w-full h-[6rem] shadow-lg flex justify-between items-center px-[1rem] relative">
+    <div className="relative xl:hidden">
+      <nav className="w-full h-[6rem] shadow-lg flex justify-between items-center px-[1rem] md:px-[3rem] relative">
         <div>
           {!menu ? (
             <img
@@ -87,7 +88,13 @@ export default function Nav() {
               setSearch(true);
             }}
           />
-          <img src="../../images/icons/bag.png" alt="" className="h-[1.3rem]" />
+          <Link to="/cart">
+            <img
+              src="../../images/icons/bag.png"
+              alt=""
+              className="h-[1.3rem]"
+            />
+          </Link>
         </div>
       </nav>
       {search && (
