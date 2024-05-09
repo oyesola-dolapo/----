@@ -125,7 +125,7 @@ export default function Nav() {
                 return (
                   <a
                     href=""
-                    className="flex py-[.6rem] px-[2rem] font-medium text-lg">
+                    className="flex py-[.6rem] px-[2rem] font-medium text-lg tracking-wide">
                     {nav.title}
                   </a>
                 );
