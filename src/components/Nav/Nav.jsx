@@ -40,12 +40,11 @@ export default function Nav() {
 
   useEffect(() => {
     if (menu) {
-      document.body.style.overflow = "hidden"; // Disable scrolling when menu is open
-    } else {
-      document.body.style.overflow = "auto"; // Enable scrolling when menu is closed
+      document.body.style.overflow = "hidden";
+      document.body.style.overflow = "auto";
     }
     return () => {
-      document.body.style.overflow = "auto"; // Re-enable scrolling on component unmount
+      document.body.style.overflow = "auto";
     };
   }, [menu]);
 
@@ -54,14 +53,14 @@ export default function Nav() {
       <nav className="w-full h-[6rem] shadow-lg flex justify-between items-center px-[1rem] relative">
         <div>
           {!menu ? (
-           <img
-           src="../../images/icons/menu.png"
-           alt=""
-           className="h-[1.5rem]"
-           onClick={() => {
-             setMenu(true);
-           }}
-         />
+            <img
+              src="../../images/icons/menu.png"
+              alt=""
+              className="h-[1.5rem]"
+              onClick={() => {
+                setMenu(true);
+              }}
+            />
           ) : (
             <img
               src="../../images/icons/close.png"
@@ -104,21 +103,24 @@ export default function Nav() {
                 alt=""
                 className="h-[1.3rem]"
                 onClick={() => {
+                  setMenu(false);
                   setSearch(true);
                 }}
               />
             </div>
           </div>
-          <div
+          <img
+            src="../../images/icons/close.png"
+            alt=""
+            className="h-[1.3rem]"
             onClick={() => {
               setSearch(false);
-            }}>
-            <i class="fa-solid fa-x text-[1.2rem]"></i>
-          </div>
+            }}
+          />
         </div>
       )}
       {menu && (
-        <div className="fixed top-0 left-0 bottom-0 w-full z-50 mt-[6rem] bg-black bg-opacity-[.5] h-[75vh]">
+        <div className="fixed top-0 left-0 bottom-0 w-full z-50 mt-[6rem] bg-black bg-opacity-[.5] h-[77vh]">
           <div className="pt-[3rem] flex flex-col justify-between w-[80%] h-full bg-white">
             <div>
               {navs.map((nav) => {
