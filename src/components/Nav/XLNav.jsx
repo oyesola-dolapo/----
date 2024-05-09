@@ -28,7 +28,7 @@ export default function XLNav() {
   ];
 
   return (
-    <div className="hidden xl:block">
+    <div className="hidden xl:block shadow">
       <nav className="px-[12rem] relative">
         <div className="h-[7rem] flex items-center justify-between ">
           <img

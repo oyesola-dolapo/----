@@ -7,9 +7,12 @@ export default function Login() {
     useContext(AuthContext);
 
   return (
-    <div className="pt-[1rem]">
+    <div className="pt-[1rem] sm:flex sm:flex-col">
       <h1 className="text-center text-xl">LOGIN TO ADMIN</h1>
-      <form action="" onSubmit={handleSignIn} className="px-[1rem] mt-[1rem]">
+      <form
+        action=""
+        onSubmit={handleSignIn}
+        className="px-[1rem] mt-[1rem] sm:w-[70%] xl:w-[50%] sm:mx-auto">
         <div className="flex flex-col">
           <label htmlFor="email">Email</label>
           <input

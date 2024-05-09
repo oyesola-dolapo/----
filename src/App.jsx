@@ -8,6 +8,7 @@ import Home from "./components/Home/Home";
 import Auth from "./components/Admin/AdminAuth/AdminAuth";
 import XLNav from "./components/Nav/XLNav";
 import Cart from "./components/cart/Cart";
+import AddItem from "./components/Admin/AdminHome/AddItem/AddItem";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/admin" element={<Auth />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/cart/add" element={<AddItem />} />
       </Routes>
     </Router>
   );
