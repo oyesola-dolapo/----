@@ -83,6 +83,7 @@ export default function Nav() {
             alt=""
             className="h-[1.3rem]"
             onClick={() => {
+              setMenu(false);
               setSearch(true);
             }}
           />
@@ -103,7 +104,6 @@ export default function Nav() {
                 alt=""
                 className="h-[1.3rem]"
                 onClick={() => {
-                  setMenu(false);
                   setSearch(true);
                 }}
               />
