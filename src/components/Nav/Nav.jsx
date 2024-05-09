@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function Nav() {
   const [search, setSearch] = useState(false);
@@ -38,22 +38,39 @@ export default function Nav() {
     },
   ];
 
+  useEffect(() => {
+    if (menu) {
+      document.body.style.overflow = "hidden"; // Disable scrolling when menu is open
+    } else {
+      document.body.style.overflow = "auto"; // Enable scrolling when menu is closed
+    }
+    return () => {
+      document.body.style.overflow = "auto"; // Re-enable scrolling on component unmount
+    };
+  }, [menu]);
+
   return (
     <div className="relative">
       <nav className="w-full h-[6rem] shadow-lg flex justify-between items-center px-[1rem] relative">
         <div>
           {!menu ? (
-            <i
-              class="fa-solid fa-bars text-[1.3rem]"
-              onClick={() => {
-                setMenu(true);
-              }}></i>
+           <img
+           src="../../images/icons/menu.png"
+           alt=""
+           className="h-[1.5rem]"
+           onClick={() => {
+             setMenu(true);
+           }}
+         />
           ) : (
-            <i
-              class="fa-solid fa-x text-[1.2rem]"
+            <img
+              src="../../images/icons/close.png"
+              alt=""
+              className="h-[1.3rem]"
               onClick={() => {
                 setMenu(false);
-              }}></i>
+              }}
+            />
           )}
         </div>
         <img
@@ -101,7 +118,7 @@ export default function Nav() {
         </div>
       )}
       {menu && (
-        <div className="bg-black bg-opacity-[.5] h-[85vh]">
+        <div className="fixed top-0 left-0 bottom-0 w-full z-50 mt-[6rem] bg-black bg-opacity-[.5] h-[75vh]">
           <div className="pt-[3rem] flex flex-col justify-between w-[80%] h-full bg-white">
             <div>
               {navs.map((nav) => {
