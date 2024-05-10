@@ -38,7 +38,7 @@ export default function Home() {
         <p className="tracking-wider text-[1.7rem] text-center mb-[1rem]">
           COLLECTION
         </p>
-        <div className=" flex justify-between sm:justify-center flex-wrap ">
+        <div className=" flex justify-between sm:justify-center flex-wrap sm:gap-4">
           {items.map((item) => {
             return (
               <Link

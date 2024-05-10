@@ -104,6 +104,9 @@ export default function Register() {
       setPrice("");
       setDesc("");
       setCategories("");
+      setImg(null);
+      setImg2(null);
+      setImg3(null);
     } catch (err) {
       toast.error("Error", 800);
       console.log(err);
