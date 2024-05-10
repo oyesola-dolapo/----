@@ -165,7 +165,7 @@ export default function Register() {
   ];
 
   return (
-    <div className="py-[1rem] sm:flex sm:flex-col sm:items-center">
+    <div className="py-[1rem] sm:flex sm:flex-col sm:items-center px-[.8rem]">
       <h1 className="text-center text-[1.2rem] font-medium mb-[1rem] uppercase">
         Add Items
       </h1>
