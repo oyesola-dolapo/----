@@ -16,6 +16,7 @@ export default function Register() {
   const [price, setPrice] = useState("");
   const [categories, setCategories] = useState("");
   const [error, setError] = useState("");
+  const [progress, setProgress] = useState("");
 
   const types = ["image/png", "image/jpeg", "image/webp"];
 
@@ -72,7 +73,8 @@ export default function Register() {
       (snapshot) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log(`Main image upload is ${progress}% done`);
+        console.log(`Uploading item: ${progress}% done`);
+        setProgress(`Uploading item: ${progress}% done`);
       },
       (err) => {
         setError(err.message);
@@ -82,72 +84,59 @@ export default function Register() {
           .ref(`items/${img.name}`)
           .getDownloadURL()
           .then((mainUrl) => {
-            const sub1UploadTask = storage.ref(`items/${img2.name}`).put(img2);
-            sub1UploadTask.on(
-              "state_changed",
-              (snapshot) => {
-                const progress =
-                  (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log(`Sub image 1 upload is ${progress}% done`);
-              },
-              (err) => {
-                setError(err.message);
-              },
-              () => {
-                storage
-                  .ref(`items/${img2.name}`)
-                  .getDownloadURL()
-                  .then((sub1Url) => {
-                    const sub2UploadTask = storage
-                      .ref(`items/${img3.name}`)
-                      .put(img3);
-                    sub2UploadTask.on(
-                      "state_changed",
-                      (snapshot) => {
-                        const progress =
-                          (snapshot.bytesTransferred / snapshot.totalBytes) *
-                          100;
-                        console.log(`Sub image 2 upload is ${progress}% done`);
-                      },
-                      (err) => {
-                        setError(err.message);
-                      },
-                      () => {
-                        storage
-                          .ref(`items/${img3.name}`)
-                          .getDownloadURL()
-                          .then((sub2Url) => {
-                            db.collection("items")
-                              .add({
-                                mainImageURL: mainUrl,
-                                subImage1URL: sub1Url,
-                                subImage2URL: sub2Url,
-                                name: name,
-                                desc: desc,
-                                price: price,
-                                categories: categories,
-                              })
-                              .then(() => {
-                                toast.success("Successfully Added", 800);
-                                setName("");
-                                setPrice("");
-                                setDesc("");
-                                setCategories("");
-                                setImg(null);
-                                setImg2(null);
-                                setImg3(null);
-                              })
-                              .catch((err) => setError(err.message));
-                          })
-                          .catch((err) => setError(err.message));
-                      }
-                    );
+            const promises = [];
+
+            if (img2) {
+              const sub1UploadTask = storage
+                .ref(`items/${img2.name}`)
+                .put(img2);
+              promises.push(sub1UploadTask);
+            }
+
+            if (img3) {
+              const sub2UploadTask = storage
+                .ref(`items/${img3.name}`)
+                .put(img3);
+              promises.push(sub2UploadTask);
+            }
+
+            Promise.all(promises)
+              .then((results) => {
+                const urls = [];
+                results.forEach((taskResult) => {
+                  urls.push(taskResult.ref.getDownloadURL());
+                });
+
+                return Promise.all(urls);
+              })
+              .then((downloadUrls) => {
+                const sub1Url = downloadUrls[0] || null;
+                const sub2Url = downloadUrls[1] || null;
+
+                db.collection("items")
+                  .add({
+                    mainImageURL: mainUrl,
+                    subImage1URL: sub1Url,
+                    subImage2URL: sub2Url,
+                    name: name,
+                    desc: desc,
+                    price: price,
+                    categories: categories,
                   })
-                  .catch((err) => setError(err.message));
-              }
-            );
+                  .then(() => {
+                    toast.success("Successfully Added", 800);
+                    setName("");
+                    setPrice("");
+                    setDesc("");
+                    setCategories("");
+                    document.getElementbyId("files").value = "";
+                    setProgress("");
+                  })
+                  .catch((err) => console.log(err.message));
+              })
+              .catch((err) => console.log(err.message));
           })
-          .catch((err) => setError(err.message));
+          .catch((err) => console.log(err.message));
       }
     );
   };
@@ -272,6 +261,7 @@ export default function Register() {
           className="bg-black text-white w-full py-[.6rem] mt-[.6rem] border-none text-[1.2rem]">
           Add
         </button>
+        <p>{progress}</p>
       </form>
     </div>
   );
