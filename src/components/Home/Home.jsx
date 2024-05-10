@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { db } from "../../Config/firebase";
-import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { collection, getDocs, query, limit } from "firebase/firestore";
 import { Link } from "react-router-dom";
 
 export default function Home() {
@@ -11,7 +11,7 @@ export default function Home() {
 
   const getItems = async () => {
     try {
-      const data = await getDocs(dataCollectionRef);
+      const data = await getDocs(query(dataCollectionRef, limit(4)));
       const filteredData = data.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
@@ -25,7 +25,7 @@ export default function Home() {
   useEffect(() => {
     getItems();
   }, []);
-  
+
   return (
     <div>
       <div className="h-[12rem] md:h-[25rem] xl:h-[90vh] bg-black bg-opacity-[.1] relative">
