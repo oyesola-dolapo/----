@@ -15,16 +15,40 @@ export default function Register() {
   const [desc, setDesc] = useState("");
   const [price, setPrice] = useState("");
   const [categories, setCategories] = useState("");
+  const [error, setError] = useState("");
+
+  const types = ["image/png", "image/jpeg", "image/webp"];
 
   // FUNCTION HANDLERS
   const handleImg = (e) => {
-    setImg(e.target.files[0]);
+    let selectedFile = e.target.files[0];
+    if (selectedFile && types.includes(selectedFile.type)) {
+      setImg(selectedFile);
+      setError("");
+    } else {
+      setImg(null);
+      setError("Please select a valid file type");
+    }
   };
   const handleImg2 = (e) => {
-    setImg2(e.target.files[0]);
+    let selectedFile = e.target.files[0];
+    if (selectedFile && types.includes(selectedFile.type)) {
+      setImg2(selectedFile);
+      setError("");
+    } else {
+      setImg2(null);
+      setError("Please select a valid file type");
+    }
   };
   const handleImg3 = (e) => {
-    setImg3(e.target.files[0]);
+    let selectedFile = e.target.files[0];
+    if (selectedFile && types.includes(selectedFile.type)) {
+      setImg3(selectedFile);
+      setError("");
+    } else {
+      setImg3(null);
+      setError("Please select a valid file type");
+    }
   };
   const handleName = (e) => {
     setName(e.target.value);
@@ -39,78 +63,93 @@ export default function Register() {
     setCategories(e.target.value);
   };
 
-  // DATABASE REF
-  const linkCollectionRef = collection(db, "items");
-
-  // UPLOAD FUNCTION
-  const uploadImages = async () => {
-    try {
-      if (img) {
-        const mainImageRef = ref(storage, `items/mainItem/${img.name}`);
-        await uploadBytes(mainImageRef, img);
-      }
-      if (img2) {
-        const subImage1Ref = ref(storage, `items/subItem1/${img2.name}`);
-        await uploadBytes(subImage1Ref, img2);
-      }
-      if (img3) {
-        const subImage2Ref = ref(storage, `items/subItem2/${img3.name}`);
-        await uploadBytes(subImage2Ref, img3);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  // FUNCTION TO EXTRACT URLS
-  const getImages = async () => {
-    try {
-      if (img) {
-        const mainImageRef = ref(storage, `items/mainItem/${img.name}`);
-        const mainImageURL = await getDownloadURL(mainImageRef);
-        setMainImageURL(mainImageURL);
-      }
-      if (img2) {
-        const subImage1Ref = ref(storage, `items/subItem1/${img2.name}`);
-        const subImage1URL = await getDownloadURL(subImage1Ref);
-        setSubImage1URL(subImage1URL);
-      }
-      if (img3) {
-        const subImage2Ref = ref(storage, `items/subItem2/${img3.name}`);
-        const subImage2URL = await getDownloadURL(subImage2Ref);
-        setSubImage2URL(subImage2URL);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  // SUBMIT FUNCTION
-  const handleSubmit = async (e) => {
+  const uploadItem = (e) => {
     e.preventDefault();
-    try {
-      await Promise.all([uploadImages(), getImages()]);
-      await addDoc(linkCollectionRef, {
-        mainImageURL: mainImageURL,
-        subImage1URL: subImage1URL,
-        subImage2URL: subImage2URL,
-        name: name,
-        desc: desc,
-        price: price,
-        categories: categories,
-      });
-      toast.success("Successfully Added", 800);
-      setName("");
-      setPrice("");
-      setDesc("");
-      setCategories("");
-      setImg(null);
-      setImg2(null);
-      setImg3(null);
-    } catch (err) {
-      toast.error("Error", 800);
-      console.log(err);
-    }
+    const mainUploadTask = storage.ref(`items/${img.name}`).put(img);
+
+    mainUploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log(`Main image upload is ${progress}% done`);
+      },
+      (err) => {
+        setError(err.message);
+      },
+      () => {
+        storage
+          .ref(`items/${img.name}`)
+          .getDownloadURL()
+          .then((mainUrl) => {
+            const sub1UploadTask = storage.ref(`items/${img2.name}`).put(img2);
+            sub1UploadTask.on(
+              "state_changed",
+              (snapshot) => {
+                const progress =
+                  (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log(`Sub image 1 upload is ${progress}% done`);
+              },
+              (err) => {
+                setError(err.message);
+              },
+              () => {
+                storage
+                  .ref(`items/${img2.name}`)
+                  .getDownloadURL()
+                  .then((sub1Url) => {
+                    const sub2UploadTask = storage
+                      .ref(`items/${img3.name}`)
+                      .put(img3);
+                    sub2UploadTask.on(
+                      "state_changed",
+                      (snapshot) => {
+                        const progress =
+                          (snapshot.bytesTransferred / snapshot.totalBytes) *
+                          100;
+                        console.log(`Sub image 2 upload is ${progress}% done`);
+                      },
+                      (err) => {
+                        setError(err.message);
+                      },
+                      () => {
+                        storage
+                          .ref(`items/${img3.name}`)
+                          .getDownloadURL()
+                          .then((sub2Url) => {
+                            db.collection("items")
+                              .add({
+                                mainImageURL: mainUrl,
+                                subImage1URL: sub1Url,
+                                subImage2URL: sub2Url,
+                                name: name,
+                                desc: desc,
+                                price: price,
+                                categories: categories,
+                              })
+                              .then(() => {
+                                toast.success("Successfully Added", 800);
+                                setName("");
+                                setPrice("");
+                                setDesc("");
+                                setCategories("");
+                                setImg(null);
+                                setImg2(null);
+                                setImg3(null);
+                              })
+                              .catch((err) => setError(err.message));
+                          })
+                          .catch((err) => setError(err.message));
+                      }
+                    );
+                  })
+                  .catch((err) => setError(err.message));
+              }
+            );
+          })
+          .catch((err) => setError(err.message));
+      }
+    );
   };
 
   const forms = [
@@ -174,7 +213,7 @@ export default function Register() {
       </h1>
       <form
         action=""
-        onSubmit={handleSubmit}
+        onSubmit={uploadItem}
         className="w-full sm:w-[70%] xl:w-[50%] flex flex-col items-center justify-center">
         <div>
           <label for="category" className="mr-[.4rem]">
@@ -201,11 +240,13 @@ export default function Register() {
           {images.map((image) => {
             return (
               <div className="my-[.5rem]">
-                <input type={image.type} onChange={image.input} />
+                <input type={image.type} onChange={image.input} id="file" />
               </div>
             );
           })}
+          <p className="text-red-500">{error}</p>
         </div>
+
         <div className="mt-[.6rem] w-full">
           {forms.map((form) => {
             return (
@@ -216,9 +257,9 @@ export default function Register() {
                 </label>
                 <input
                   type={form.type}
-                  required
                   onChange={form.input}
                   value={form.value}
+                  required
                   className="border-[2px] border-solid border-black w-full h-[3rem] px-[1rem]"
                   placeholder={`Enter ${form.title}`}
                 />

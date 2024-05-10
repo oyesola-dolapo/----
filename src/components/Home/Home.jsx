@@ -25,6 +25,7 @@ export default function Home() {
   useEffect(() => {
     getItems();
   }, []);
+  
   return (
     <div>
       <div className="h-[12rem] md:h-[25rem] xl:h-[90vh] bg-black bg-opacity-[.1] relative">
