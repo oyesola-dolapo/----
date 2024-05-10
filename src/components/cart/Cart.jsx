@@ -7,7 +7,7 @@ export default function Cart() {
     <div>
       {items.length < 1 && (
         <div className="flex flex-col items-center justify-center gap-6 py-[3rem]">
-          <p className="text-[3rem] font-medium">Your Cart is Empty</p>
+          <p className=" text-[1.5rem] sm:text-[1.9rem] xl:text-[3rem] font-medium">Your Cart is Empty</p>
           <Link
             to="/"
             className="bg-black text-white py-[1rem] px-[2rem] tracking-wider">
