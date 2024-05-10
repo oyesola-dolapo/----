@@ -27,7 +27,7 @@ export default function LatestProducts() {
 
   return (
     <div className="px-[1rem] xl:px-[12rem] py-[1rem]">
-      <p className="tracking-wider text-[2.5rem] font-medium">Latest Drop</p>
+      <p className="tracking-wider text-[1.8rem] xl:text-[2.5rem] font-medium">Latest Drop</p>
       <div className=" flex justify-between sm:justify-start flex-wrap mt-[1rem] sm:gap-4">
         {items.map((item) => {
           return (
