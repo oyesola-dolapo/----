@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { db, storage } from "../../../../Config/firebase";
 import { addDoc, collection } from "firebase/firestore";
-import { ref, uploadBytes } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export default function Register() {
   const [img, setImg] = useState(null);
   const [img2, setImg2] = useState(null);
   const [img3, setImg3] = useState(null);
+  const [mainImageURL, setMainImageURL] = useState("");
+  const [subImage1URL, setSubImage1URL] = useState("");
+  const [subImage2URL, setSubImage2URL] = useState("");
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [price, setPrice] = useState("");
@@ -36,8 +39,6 @@ export default function Register() {
     setCategories(e.target.value);
   };
 
-  const autoClose = { autoClose: 800 };
-
   // DATABASE REF
   const linkCollectionRef = collection(db, "items");
 
@@ -53,6 +54,14 @@ export default function Register() {
       await uploadBytes(mainImageRef, img);
       await uploadBytes(subImage1Ref, img2);
       await uploadBytes(subImage2Ref, img3);
+
+      const mainImageURL = await getDownloadURL(mainImageRef);
+      const subImage1URL = await getDownloadURL(subImage1Ref);
+      const subImage2URL = await getDownloadURL(subImage2Ref);
+
+      setMainImageURL(mainImageURL);
+      setSubImage1URL(subImage1URL);
+      setSubImage2URL(subImage2URL);
     } catch (err) {
       console.log(err);
     }
@@ -62,20 +71,27 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      uploadImages();
+      toast.promise(uploadImages(), {
+        pending: "Uploading data...",
+        success: "Data uploaded successfully",
+        error: "Error uploading images",
+      });
+
+      await uploadImages();
       await addDoc(linkCollectionRef, {
         name: name,
         desc: desc,
         price: price,
         categories: categories,
+        mainImageURL: mainImageURL,
+        subImage1URL: subImage1URL,
+        subImage2URL: subImage2URL,
       });
-      toast.success("Successfully Added", autoClose);
       setName("");
       setPrice("");
       setDesc("");
       setCategories("");
     } catch (err) {
-      toast.error("Error", autoClose);
       console.log(err);
     }
   };
@@ -133,8 +149,6 @@ export default function Register() {
       value: "accessories",
     },
   ];
-
-  console.log(img);
 
   return (
     <div className="py-[1rem] sm:flex sm:flex-col sm:items-center">
