@@ -19,7 +19,7 @@ export default function AdminHome() {
       </div>
       <div className="flex justify-center mt-[2rem]">
         <Link
-          to="/cart/add"
+          to="/admin/add"
           className="text-[1.2rem] text-white bg-black px-[2rem] py-[.6rem] tracking-wider font-medium">
           ADD ITEM
         </Link>

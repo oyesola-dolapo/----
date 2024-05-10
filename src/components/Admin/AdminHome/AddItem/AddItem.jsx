@@ -42,26 +42,44 @@ export default function Register() {
   // DATABASE REF
   const linkCollectionRef = collection(db, "items");
 
-  //UPLOAD FUNCTION
-  const uploadImages = async (e) => {
-    if (!img || !img2 || !img3) return;
-
+  // UPLOAD FUNCTION
+  const uploadImages = async () => {
     try {
-      const mainImageRef = ref(storage, `items/mainItem/${img.name}`);
-      const subImage1Ref = ref(storage, `items/subItem1/${img2.name}`);
-      const subImage2Ref = ref(storage, `items/subItem2/${img3.name}`);
+      if (img) {
+        const mainImageRef = ref(storage, `items/mainItem/${img.name}`);
+        await uploadBytes(mainImageRef, img);
+      }
+      if (img2) {
+        const subImage1Ref = ref(storage, `items/subItem1/${img2.name}`);
+        await uploadBytes(subImage1Ref, img2);
+      }
+      if (img3) {
+        const subImage2Ref = ref(storage, `items/subItem2/${img3.name}`);
+        await uploadBytes(subImage2Ref, img3);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-      await uploadBytes(mainImageRef, img);
-      await uploadBytes(subImage1Ref, img2);
-      await uploadBytes(subImage2Ref, img3);
-
-      const mainImageURL = await getDownloadURL(mainImageRef);
-      const subImage1URL = await getDownloadURL(subImage1Ref);
-      const subImage2URL = await getDownloadURL(subImage2Ref);
-
-      setMainImageURL(mainImageURL);
-      setSubImage1URL(subImage1URL);
-      setSubImage2URL(subImage2URL);
+  // FUNCTION TO EXTRACT URLS
+  const getImages = async () => {
+    try {
+      if (img) {
+        const mainImageRef = ref(storage, `items/mainItem/${img.name}`);
+        const mainImageURL = await getDownloadURL(mainImageRef);
+        setMainImageURL(mainImageURL);
+      }
+      if (img2) {
+        const subImage1Ref = ref(storage, `items/subItem1/${img2.name}`);
+        const subImage1URL = await getDownloadURL(subImage1Ref);
+        setSubImage1URL(subImage1URL);
+      }
+      if (img3) {
+        const subImage2Ref = ref(storage, `items/subItem2/${img3.name}`);
+        const subImage2URL = await getDownloadURL(subImage2Ref);
+        setSubImage2URL(subImage2URL);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -71,27 +89,23 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      toast.promise(uploadImages(), {
-        pending: "Uploading data...",
-        success: "Data uploaded successfully",
-        error: "Error uploading images",
-      });
-
-      await uploadImages();
+      await Promise.all([uploadImages(), getImages()]);
       await addDoc(linkCollectionRef, {
+        mainImageURL: mainImageURL,
+        subImage1URL: subImage1URL,
+        subImage2URL: subImage2URL,
         name: name,
         desc: desc,
         price: price,
         categories: categories,
-        mainImageURL: mainImageURL,
-        subImage1URL: subImage1URL,
-        subImage2URL: subImage2URL,
       });
+      toast.success("Successfully Added", 800);
       setName("");
       setPrice("");
       setDesc("");
       setCategories("");
     } catch (err) {
+      toast.error("Error", 800);
       console.log(err);
     }
   };
