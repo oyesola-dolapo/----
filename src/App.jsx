@@ -9,6 +9,10 @@ import Auth from "./components/Admin/AdminAuth/AdminAuth";
 import XLNav from "./components/Nav/XLNav";
 import Cart from "./components/cart/Cart";
 import AddItem from "./components/Admin/AdminHome/AddItem/AddItem";
+import AddLatest from "./components/Admin/AdminHome/AddItem/AddLatest";
+import AllProducts from "./components/Products/AllProducts";
+import LatestProducts from "./components/Products/LatestProducts";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   return (
@@ -23,7 +27,11 @@ function App() {
         <Route path="/admin" element={<Auth />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/admin/add" element={<AddItem />} />
+        <Route path="/admin/add-latest" element={<AddLatest />} />
+        <Route path="/all-products" element={<AllProducts />} />
+        <Route path="/latest-products" element={<LatestProducts />} />
       </Routes>
+      <Footer />
     </Router>
   );
 }

@@ -4,7 +4,7 @@ import { db, storage } from "../../../../Config/firebase";
 import { addDoc, collection } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-export default function AddItem() {
+export default function AddLatest() {
   const [img, setImg] = useState(null);
   const [img2, setImg2] = useState(null);
   const [img3, setImg3] = useState(null);
@@ -66,7 +66,7 @@ export default function AddItem() {
 
   const uploadItem = (e) => {
     e.preventDefault();
-    const mainUploadTask = storage.ref(`items/${img.name}`).put(img);
+    const mainUploadTask = storage.ref(`latestItems/${img.name}`).put(img);
 
     mainUploadTask.on(
       "state_changed",
@@ -81,7 +81,7 @@ export default function AddItem() {
       },
       () => {
         storage
-          .ref(`items/${img.name}`)
+          .ref(`latestItems/${img.name}`)
           .getDownloadURL()
           .then((mainUrl) => {
             const promises = [];
@@ -113,7 +113,7 @@ export default function AddItem() {
                 const sub1Url = downloadUrls[0] || null;
                 const sub2Url = downloadUrls[1] || null;
 
-                db.collection("items")
+                db.collection("latestItems")
                   .add({
                     mainImageURL: mainUrl,
                     subImage1URL: sub1Url,
@@ -198,7 +198,7 @@ export default function AddItem() {
   return (
     <div className="py-[1rem] sm:flex sm:flex-col sm:items-center px-[.8rem]">
       <h1 className="text-center text-[1.2rem] font-medium mb-[1rem] uppercase">
-        Add Items
+        Add Latest Items
       </h1>
       <form
         action=""

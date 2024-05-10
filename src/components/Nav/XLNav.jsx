@@ -11,11 +11,11 @@ export default function XLNav() {
     },
     {
       title: "Shop Latest",
-      link: "",
+      link: "/latest-products",
     },
     {
       title: "All Products",
-      link: "",
+      link: "/all-products",
     },
     {
       title: "All Categories",

@@ -5,25 +5,25 @@ import { collection, getDocs, query, limit } from "firebase/firestore";
 import { Link } from "react-router-dom";
 
 export default function Home() {
-  const [items, setItems] = useState([]);
+  const [latestItems, setLatestItems] = useState([]);
 
-  const dataCollectionRef = collection(db, "items");
+  const latestItemsRef = collection(db, "latestItems");
 
-  const getItems = async () => {
+  const getLatestItems = async () => {
     try {
-      const data = await getDocs(query(dataCollectionRef, limit(4)));
+      const data = await getDocs(query(latestItemsRef, limit(4)));
       const filteredData = data.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
       }));
-      setItems(filteredData);
+      setLatestItems(filteredData);
     } catch (err) {
       console.log(err);
     }
   };
 
   useEffect(() => {
-    getItems();
+    getLatestItems();
   }, []);
 
   return (
@@ -35,31 +35,44 @@ export default function Home() {
           SHOP LATEST
         </a>
       </div>
-      <div className="py-[1rem] px-[1rem]">
-        <p className="tracking-wider text-[1.7rem] text-center mb-[1rem]">
-          COLLECTION
-        </p>
-        <div className=" flex justify-between sm:justify-center flex-wrap sm:gap-4">
-          {items.map((item) => {
-            return (
-              <Link
-                to=""
-                className="flex flex-col overflow-hidden min-w-[10.5rem] max-w-[10.5rem] xl:max-w-[15rem] xl:min-w-[15rem] mb-[1rem]">
-                <div className="bg-black bg-opacity-[.1] flex items-center justify-center px-2 min-h-[15rem] max-h-[15rem] xl:max-h-[21rem] xl:min-h-[21rem] w-full">
-                  <img
-                    src={item.mainImageURL}
-                    alt=""
-                    className="object-cover"
-                  />
-                </div>
-                <p className="tracking-wider my-[.6rem] text-[.8rem]">
-                  {item.name}
-                </p>
-                <p className="tracking-wider text-[1rem]">{item.price} CAD</p>
-              </Link>
-            );
-          })}
+      {latestItems.length > 0 && (
+        <div className="py-[1rem] px-[1rem]">
+          <p className="tracking-wider text-[1.7rem] text-center mb-[1rem]">
+            LATEST COLLECTION
+          </p>
+          <div className=" flex justify-between sm:justify-center flex-wrap sm:gap-4">
+            {latestItems.map((item) => {
+              return (
+                <Link
+                  to=""
+                  className="flex flex-col overflow-hidden min-w-[10.5rem] max-w-[10.5rem] xl:max-w-[15rem] xl:min-w-[15rem] mb-[1rem]">
+                  <div className="bg-black bg-opacity-[.1] flex items-center justify-center px-2 min-h-[15rem] max-h-[15rem] xl:max-h-[21rem] xl:min-h-[21rem] w-full">
+                    <img
+                      src={item.mainImageURL}
+                      alt=""
+                      className="object-cover"
+                    />
+                  </div>
+                  <p className="tracking-wider my-[.6rem] text-[.8rem]">
+                    {item.name}
+                  </p>
+                  <p className="tracking-wider text-[1rem]">{item.price} CAD</p>
+                </Link>
+              );
+            })}
+          </div>
         </div>
+      )}
+
+      <div className="flex flex-col items-center gap-2 py-[1rem]">
+        <p className="tracking-wider text-[1.7rem] text-center mb-[.7rem]">
+          EARLIER COLLECTION
+        </p>
+        <Link
+          to="/all-products"
+          className="tracking-widest px-[2rem] py-[1rem] bg-black text-white font-medium">
+          SHOP ALL
+        </Link>
       </div>
     </div>
   );

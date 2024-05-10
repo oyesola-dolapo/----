@@ -12,11 +12,11 @@ export default function Nav() {
     },
     {
       title: "Shop Latest",
-      link: "",
+      link: "/latest-products",
     },
     {
       title: "All Products",
-      link: "",
+      link: "/all-products",
     },
     {
       title: "All Categories",
@@ -132,11 +132,14 @@ export default function Nav() {
             <div>
               {navs.map((nav) => {
                 return (
-                  <a
-                    href=""
+                  <Link
+                    to={nav.link}
+                    onClick={() => {
+                      setMenu(false);
+                    }}
                     className="flex py-[.6rem] px-[2rem] font-medium text-lg tracking-wide">
                     {nav.title}
-                  </a>
+                  </Link>
                 );
               })}
             </div>

@@ -6,7 +6,7 @@ export default function AdminHome() {
   const { handleSignOut, loggedIn } = useContext(AuthContext);
 
   return (
-    <div className="p-[1rem] px-[1rem]">
+    <div className="p-[1rem] px-[1rem] xl:px-[12rem]">
       <div className="flex items-center justify-between">
         <p className="text-[1.2rem]">Welcome</p>
         <button
@@ -17,11 +17,16 @@ export default function AdminHome() {
           Sign Out
         </button>
       </div>
-      <div className="flex justify-center mt-[2rem]">
+      <div className="flex justify-center items-center gap-6 mt-[2rem]">
         <Link
           to="/admin/add"
           className="text-[1.2rem] text-white bg-black px-[2rem] py-[.6rem] tracking-wider font-medium">
           ADD ITEM
+        </Link>
+        <Link
+          to="/admin/add-latest"
+          className="text-[1.2rem] text-white bg-black px-[2rem] py-[.6rem] tracking-wider font-medium">
+          ADD LATEST ITEM
         </Link>
       </div>
     </div>
