@@ -10,7 +10,7 @@ export default function Footer() {
     ,
   ];
   return (
-    <footer className="px-8 py-4 flex flex-col sm:px-24 border-t-2 border-black- border-solid border-opacity-[.5]">
+    <footer className="px-8 py-4 flex flex-col sm:px-24 xl:px-[12rem] border-t-2 border-solid border-opacity-[.5]">
       <div className="flex flex-col sm:my-0 sm:mx-auto sm:items-center gap-4">
         <p className="font-medium text-xl">LEGAL</p>
         <ul className="tracking-wider flex flex-col gap-6  sm:flex-row">
