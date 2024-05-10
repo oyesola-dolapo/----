@@ -25,7 +25,7 @@ export default function AllProducts() {
     getAllItems();
   }, []);
   return (
-    <div className="px-[1rem] xl:px-[12rem] py-[1rem]">
+    <div className="px-[1rem] xl:px-[12rem] py-[1rem] min-h-[80vh]">
       <p className="tracking-wider text-[1.8rem] xl:text-[2.5rem] font-medium">
         All Products
       </p>

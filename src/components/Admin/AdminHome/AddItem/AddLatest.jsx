@@ -196,7 +196,7 @@ export default function AddLatest() {
   ];
 
   return (
-    <div className="py-[1rem] sm:flex sm:flex-col sm:items-center px-[.8rem]">
+    <div className="py-[1rem] sm:flex sm:flex-col sm:items-center px-[.8rem] min-h-[80vh]">
       <h1 className="text-center text-[1.2rem] font-medium mb-[1rem] uppercase">
         Add Latest Items
       </h1>

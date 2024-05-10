@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function Cart() {
   const [items, setItems] = useState([]);
   return (
-    <div>
+    <div className="min-h-[80vh]">
       {items.length < 1 && (
         <div className="flex flex-col items-center justify-center gap-6 py-[3rem]">
           <p className=" text-[1.5rem] sm:text-[1.9rem] xl:text-[3rem] font-medium">Your Cart is Empty</p>

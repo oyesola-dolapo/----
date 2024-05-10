@@ -27,7 +27,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div>
+    <div className="min-h-[80vh]">
       <div className="h-[12rem] md:h-[25rem] xl:h-[90vh] bg-black bg-opacity-[.1] relative">
         <a
           href="#"

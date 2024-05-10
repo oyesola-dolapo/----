@@ -7,7 +7,7 @@ export default function Login() {
     useContext(AuthContext);
 
   return (
-    <div className="pt-[1rem] sm:flex sm:flex-col">
+    <div className="pt-[1rem] sm:flex sm:flex-col min-h-[80vh]">
       <h1 className="text-center text-xl">LOGIN TO ADMIN</h1>
       <form
         action=""
