@@ -129,7 +129,7 @@ export default function Register() {
                     setPrice("");
                     setDesc("");
                     setCategories("");
-                    document.getElementbyId("files").value = "";
+                    document.getElementById("file").value = "";
                     setProgress("");
                   })
                   .catch((err) => console.log(err.message));
