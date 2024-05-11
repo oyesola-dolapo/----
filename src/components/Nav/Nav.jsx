@@ -42,6 +42,7 @@ export default function Nav() {
   useEffect(() => {
     if (menu) {
       document.body.style.overflow = "hidden";
+    } else {
       document.body.style.overflow = "auto";
     }
     return () => {
