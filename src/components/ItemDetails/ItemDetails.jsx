@@ -103,13 +103,14 @@ export default function ItemDetails() {
       if (quantity === 0) {
         setQuantityErr(true);
       } else {
-        setLoader(true)
+        setLoader(true);
         await addDoc(cartRef, {
           name: item.name,
           price: item.price,
           image: item.mainImageURL,
           quantity: quantity,
           size: size,
+          itemId: itemId,
         });
         setSizeErr(false);
         setCartShow(true);
@@ -119,7 +120,7 @@ export default function ItemDetails() {
       toast.error("Error", 300);
       console.log(err);
     } finally {
-      setLoader(false)
+      setLoader(false);
     }
   };
 

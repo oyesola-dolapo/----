@@ -3,9 +3,6 @@ import { toast } from "react-toastify";
 import { db } from "../../Config/firebase";
 import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { Link } from "react-router-dom";
-import lottie from "lottie-web";
-import { defineElement } from "@lordicon/element";
-defineElement(lottie.loadAnimation);
 
 export default function Cart() {
   const [items, setItems] = useState([]);
@@ -89,13 +86,15 @@ export default function Cart() {
           {items.map((item) => {
             return (
               <div className="flex gap-2 my-[.7rem] sm:my-[2rem] sm:justify-between sm:px-[6rem] lg:px-0">
-                <div className="w-[7rem] h-[7rem] xl:w-[11rem] xl:h-[11rem] flex justify-center items-center bg-[#eaeaea]">
+                <Link
+                  to={`/item/${item.itemId}`}
+                  className="w-[7rem] h-[7rem] xl:w-[11rem] xl:h-[11rem] flex justify-center items-center bg-[#eaeaea]">
                   <img
                     src={item.image}
                     alt=""
                     className="h-[7rem] xl:h-[10rem] object-cover"
                   />
-                </div>
+                </Link>
                 <div>
                   <p className="tracking-widest text-[.8rem] xl:text-[1rem]">
                     {item.name}
