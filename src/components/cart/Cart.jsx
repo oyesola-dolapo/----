@@ -93,7 +93,7 @@ export default function Cart() {
                   <img
                     src={item.image}
                     alt=""
-                    className="h-[5rem] xl:h-[8rem] object-cover"
+                    className="h-[7rem] xl:h-[10rem] object-cover"
                   />
                 </div>
                 <div>

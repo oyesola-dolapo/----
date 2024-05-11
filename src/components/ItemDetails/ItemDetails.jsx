@@ -132,7 +132,7 @@ export default function ItemDetails() {
               <img
                 src={item.mainImageURL}
                 alt=""
-                className="h-[21rem] xl:h-[40rem] object-cover"
+                className="h-[25rem] xl:h-[40rem] object-cover"
               />
             </div>
             {item.subImage1URL && (
@@ -160,7 +160,7 @@ export default function ItemDetails() {
               <img
                 src={item.mainImageURL}
                 alt=""
-                className="h-[21rem] xl:h-[40rem] object-cover"
+                className="h-[32rem] object-cover"
               />
             </div>
             {item.subImage1URL && (
@@ -252,7 +252,7 @@ export default function ItemDetails() {
                       id="size"
                       className={`${
                         activeSize === size.size ? "active" : ""
-                      } border-2 border-black mb-[.4rem] rounded-full min-w-14 h-8 mr-2 flex justify-center flex-wrap items-center`}
+                      } border-2 border-black mb-[.4rem] rounded-full min-w-14 h-8 mr-2 flex justify-center flex-wrap items-center cursor-pointer`}
                       key={size.size}
                       onClick={() => {
                         setActive(size.size);
