@@ -188,7 +188,7 @@ export default function ItemDetails() {
                   <img
                     src="../../images/icons/close.png"
                     alt=""
-                    className="h-[1rem]"
+                    className="h-[1rem] cursor-pointer"
                     onClick={() => {
                       setCartShow(false);
                     }}
@@ -206,7 +206,7 @@ export default function ItemDetails() {
                     <p className="text-center text-[1.2rem] font-medium tracking-widest">
                       {item.name}
                     </p>
-                    <p className="text-center text-gray-400">' {item.size} '</p>
+                    <p className="text-center text-gray-400">' {size} '</p>
                   </div>
                 </div>
                 <Link
@@ -223,7 +223,7 @@ export default function ItemDetails() {
                   onClick={() => {
                     setCartShow(false);
                   }}
-                  className="text-center underline tracking-widest mt-[1rem] ">
+                  className="text-center underline tracking-widest mt-[1rem] cursor-pointer">
                   Continue Shopping
                 </p>
               </div>
