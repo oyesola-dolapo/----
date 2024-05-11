@@ -70,7 +70,7 @@ export default function Cart() {
 
   return (
     <div className="min-h-[80vh] p-[1rem] xl:px-[12rem]">
-      <p className="tracking-wider text-[1.8rem] xl:text-[2.5rem] font-medium">
+      <p className="tracking-wider text-[1.8rem] xl:text-[2.5rem] font-medium sm:ml-[4rem] xl:ml-0">
         Your Cart
       </p>
       {items.length < 1 ? (
@@ -88,7 +88,7 @@ export default function Cart() {
         <div className="flex flex-col gap-2">
           {items.map((item) => {
             return (
-              <div className="flex gap-2 my-[.7rem] xl:my-[2rem] xl:justify-between">
+              <div className="flex gap-2 my-[.7rem] sm:my-[2rem] sm:justify-between sm:px-[6rem] lg:px-0">
                 <div className="w-[7rem] h-[7rem] xl:w-[11rem] xl:h-[11rem] flex justify-center items-center bg-[#eaeaea]">
                   <img
                     src={item.image}
