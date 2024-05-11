@@ -8,6 +8,7 @@ export default function ItemDetails() {
   const [item, setItem] = useState(null);
   const { itemId } = useParams();
   const { currentUser } = useAuth();
+  const [quantity, setQuantity] = useState(0);
 
   useEffect(() => {
     const fetchLatest = async () => {
@@ -83,10 +84,20 @@ export default function ItemDetails() {
     setActiveSize(size);
   };
 
+  const incrementQuantity = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const decrementQuantity = () => {
+    if (quantity > 0) {
+      setQuantity(quantity - 1);
+    }
+  };
+
   return (
-    <div>
+    <div className="min-h-[80vh] py-[1rem]">
       {item ? (
-        <div className="flex flex-col items-center pt-8 sm:flex-row sm:items-start sm:gap-2 px-4">
+        <div className="flex flex-col items-center sm:flex-row sm:items-start sm:gap-2 px-4">
           <div className="image-container bg-[#eaeaea] w-[90%] h-[23rem] flex justify-center items-center lg:h-[30rem]">
             <img
               src={item.mainImageURL}
@@ -118,6 +129,24 @@ export default function ItemDetails() {
                   );
                 })}
               </ul>
+            </div>
+            <div className="my-[1rem]">
+              <p className="text-[.8rem] tracking-wider mb-[.5rem]">Quantity</p>
+              <div className="border-2 border-black border-solid h-[2.6rem] w-[7rem] flex justify-between items-center px-2">
+                <img
+                  src="../../images/icons/remove.png"
+                  alt=""
+                  className="h-[1.2rem] cursor-pointer"
+                  onClick={decrementQuantity}
+                />
+                <p>{quantity}</p>
+                <img
+                  src="../../images/icons/add.png"
+                  alt=""
+                  className="h-[1.2rem] cursor-pointer"
+                  onClick={incrementQuantity}
+                />
+              </div>
             </div>
             <div className="mt-6">
               <button className="cart-btn w-full h-14 mb-2 border-2 border-black text-lg tracking-wider">
