@@ -12,6 +12,10 @@ export default function Cart() {
   const [totalPrice, setTotalPrice] = useState(0);
   const [loadingItems, setLoadingItems] = useState([]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const cartRef = collection(db, "cart");
 
   const getCartItems = async () => {
@@ -121,7 +125,11 @@ export default function Cart() {
                         src="https://cdn.lordicon.com/gkryirhd.json"
                         trigger="loop"
                         state="loop-rotation-three-quarters"
-                        style={{ width: "30px", height: "30px", marginTop: "8px" }}></lord-icon>
+                        style={{
+                          width: "30px",
+                          height: "30px",
+                          marginTop: "8px",
+                        }}></lord-icon>
                     ) : (
                       <img
                         src="../../images/icons/delete.png"
