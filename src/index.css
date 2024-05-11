@@ -9,3 +9,8 @@
 .image-container::-webkit-scrollbar {
   display: none;
 }
+
+.active {
+  background-color: #000;
+  color: white;
+}
