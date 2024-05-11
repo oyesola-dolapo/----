@@ -121,15 +121,16 @@ export default function Cart() {
                       />
                     </div>
                     {loadingItems.includes(item.id) ? (
-                      <lord-icon
-                        src="https://cdn.lordicon.com/gkryirhd.json"
-                        trigger="loop"
-                        state="loop-rotation-three-quarters"
-                        style={{
-                          width: "30px",
-                          height: "30px",
-                          marginTop: "8px",
-                        }}></lord-icon>
+                      <div className="h-max w-max mt-[1.5rem]">
+                        <lord-icon
+                          src="https://cdn.lordicon.com/gkryirhd.json"
+                          trigger="loop"
+                          state="loop-rotation-three-quarters"
+                          style={{
+                            width: "30px",
+                            height: "30px",
+                          }}></lord-icon>
+                      </div>
                     ) : (
                       <img
                         src="../../images/icons/delete.png"
