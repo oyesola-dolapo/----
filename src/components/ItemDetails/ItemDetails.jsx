@@ -313,7 +313,7 @@ export default function ItemDetails() {
           </div>
         </div>
       ) : (
-        <div className="flex justify-center items-center w-full h-[70vh]">
+        <div className="flex justify-center items-center w-full h-[65vh]">
           <lord-icon
             src="https://cdn.lordicon.com/gkryirhd.json"
             trigger="loop"
