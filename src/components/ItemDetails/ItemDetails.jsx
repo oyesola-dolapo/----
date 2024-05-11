@@ -92,7 +92,7 @@ export default function ItemDetails() {
   return (
     <div className="min-h-[80vh] py-[1rem] xl:px-[12rem]">
       {item ? (
-        <div className="sm:flex items-center sm:flex-row sm:items-start sm:gap-2 px-4 w-screen">
+        <div className="sm:flex items-center sm:flex-row sm:items-start sm:gap-2 px-4">
           <div className="image-container h-[26rem] sm:h-[30rem] flex gap-2 snap-x overflow-x-scroll sm:hidden">
             <div className="flex-shrink-0 w-full flex justify-center items-center h-full bg-[#eaeaea]">
               <img
