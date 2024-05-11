@@ -29,11 +29,11 @@ export default function Home() {
   return (
     <div className="min-h-[80vh]">
       <div className="h-[12rem] md:h-[25rem] xl:h-[90vh] bg-black bg-opacity-[.1] relative">
-        <a
-          href="#"
+        <Link
+          to="/latest-products"
           className="tracking-widest bg-white shadow-lg px-[2rem] py-[1rem] text-[1rem] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           SHOP LATEST
-        </a>
+        </Link>
       </div>
       {latestItems.length > 0 && (
         <div className="py-[1rem] px-[1rem]">
@@ -44,7 +44,7 @@ export default function Home() {
             {latestItems.map((item) => {
               return (
                 <Link
-                  to=""
+                  to={`/item/${item.id}`}
                   className="flex flex-col overflow-hidden min-w-[10.5rem] max-w-[10.5rem] xl:max-w-[15rem] xl:min-w-[15rem] mb-[1rem]">
                   <div className="bg-black bg-opacity-[.1] flex items-center justify-center px-2 min-h-[15rem] max-h-[15rem] xl:max-h-[21rem] xl:min-h-[21rem] w-full">
                     <img
