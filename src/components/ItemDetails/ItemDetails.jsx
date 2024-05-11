@@ -109,7 +109,7 @@ export default function ItemDetails() {
             <div>
               <p>𝟗ƑℲ</p>
               <h1 className="text-2xl tracking-widest">{item.name}</h1>
-              <p className="text-xl pt-4 tracking-wider">{item.price}</p>
+              <p className="text-xl pt-4 tracking-wider">{item.price} CAD</p>
               <p className="text-xs opacity-[.7]">Tax included</p>
             </div>
             <div className="mt-4">
