@@ -103,7 +103,7 @@ export default function Cart() {
                   <p className="tracking-widest  text-[.8rem] xl:text-[1rem]">
                     {item.price} CAD
                   </p>
-                  <p>{item.size}</p>
+                  <p className="tracking-widest text-gray-400">'{item.size}'</p>
                   <div className="flex items-center gap-3">
                     <div className="border-2 border-black border-solid h-[2.6rem] w-[7rem] flex justify-between items-center px-2 mt-[1rem]">
                       <img
