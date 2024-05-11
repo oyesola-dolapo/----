@@ -15,6 +15,7 @@ export default function ItemDetails() {
   const [sizeErr, setSizeErr] = useState(false);
   const [quantityErr, setQuantityErr] = useState(false);
   const [cartShow, setCartShow] = useState(false);
+  const [loader, setLoader] = useState(false);
 
   useEffect(() => {
     const fetchLatest = async () => {
@@ -102,6 +103,7 @@ export default function ItemDetails() {
       if (quantity === 0) {
         setQuantityErr(true);
       } else {
+        setLoader(true)
         await addDoc(cartRef, {
           name: item.name,
           price: item.price,
@@ -116,6 +118,8 @@ export default function ItemDetails() {
     } catch (err) {
       toast.error("Error", 300);
       console.log(err);
+    } finally {
+      setLoader(false)
     }
   };
 
@@ -292,7 +296,15 @@ export default function ItemDetails() {
               <button
                 onClick={addCart}
                 className="cart-btn w-full h-14 mb-2 border-2 border-black text-lg tracking-wider">
-                Add to cart
+                {loader ? (
+                  <lord-icon
+                    src="https://cdn.lordicon.com/gkryirhd.json"
+                    trigger="loop"
+                    state="loop-rotation-three-quarters"
+                    style={{ width: "40px", height: "40px" }}></lord-icon>
+                ) : (
+                  <p>Add to cart</p>
+                )}
               </button>
               <a href="#" className=" text-center underline text-sm">
                 <p>Payment Options</p>
