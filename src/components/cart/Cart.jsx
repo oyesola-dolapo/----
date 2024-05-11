@@ -88,7 +88,7 @@ export default function Cart() {
         <div className="flex flex-col gap-2">
           {items.map((item) => {
             return (
-              <div className="flex gap-2 my-[2rem] xl:justify-between">
+              <div className="flex gap-2 my-[.7rem] xl:my-[2rem] xl:justify-between">
                 <div className="w-[7rem] h-[7rem] xl:w-[11rem] xl:h-[11rem] flex justify-center items-center bg-[#eaeaea]">
                   <img
                     src={item.image}
