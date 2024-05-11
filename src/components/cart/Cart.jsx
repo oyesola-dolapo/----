@@ -85,7 +85,7 @@ export default function Cart() {
         <div className="flex flex-col gap-2">
           {items.map((item) => {
             return (
-              <div className="flex gap-2 my-[.7rem] sm:my-[2rem] sm:justify-between sm:px-[6rem] lg:px-0">
+              <div className="flex gap-2 my-[.7rem] sm:my-[2rem] justify-between sm:px-[6rem] lg:px-0">
                 <Link
                   to={`/item/${item.itemId}`}
                   className="w-[7rem] h-[7rem] xl:w-[11rem] xl:h-[11rem] flex justify-center items-center bg-[#eaeaea]">
