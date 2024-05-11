@@ -52,7 +52,7 @@ export default function AllProducts() {
           })}
         </div>
       ) : (
-        <div className="flex justify-center w-full mt-[2rem]">
+        <div className="flex justify-center items-center w-full h-[70vh]">
           <lord-icon
             src="https://cdn.lordicon.com/gkryirhd.json"
             trigger="loop"
