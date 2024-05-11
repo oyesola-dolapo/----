@@ -127,7 +127,7 @@ export default function AddLatest() {
                     categories: categories,
                   })
                   .then(() => {
-                    toast.success("Successfully Added", 800);
+                    toast.success("Successfully Added", 300);
                     setName("");
                     setPrice("");
                     setDesc("");
@@ -135,7 +135,10 @@ export default function AddLatest() {
                     document.getElementById("file").value = "";
                     setProgress("");
                   })
-                  .catch((err) => console.log(err.message));
+                  .catch((err) => {
+                    console.log(err.message)
+                    toast.error("Error adding item", 300)
+                  });
               })
               .catch((err) => console.log(err.message));
           })

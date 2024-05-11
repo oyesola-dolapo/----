@@ -125,7 +125,7 @@ export default function AddItem() {
                     categories: categories,
                   })
                   .then(() => {
-                    toast.success("Successfully Added", 800);
+                    toast.success("Successfully Added", 300);
                     setName("");
                     setPrice("");
                     setDesc("");
@@ -133,7 +133,10 @@ export default function AddItem() {
                     document.getElementById("file").value = "";
                     setProgress("");
                   })
-                  .catch((err) => console.log(err.message));
+                  .catch((err) => {
+                    console.log(err.message);
+                    toast.error("Error adding item", 300);
+                  });
               })
               .catch((err) => console.log(err.message));
           })
@@ -270,7 +273,9 @@ export default function AddItem() {
         </div>
       ) : (
         <div className="flex flex-col items-center gap-2">
-          <p className="text-[1.2rem] tracking-wider uppercase">Login to add Item</p>
+          <p className="text-[1.2rem] tracking-wider uppercase">
+            Login to add Item
+          </p>
           <Link to="/admin" className="tracking-wider text-[1.2rem] underline">
             Login
           </Link>

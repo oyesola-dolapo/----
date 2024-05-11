@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { db } from "../../Config/firebase";
 import { doc, getDoc, deleteDoc } from "firebase/firestore";
 import { useAuth } from "../AuthContext";
+import { toast } from "react-toastify";
 
 export default function ItemDetails() {
   const [item, setItem] = useState(null);
@@ -47,22 +48,16 @@ export default function ItemDetails() {
     const linkDoc = doc(db, "items", id);
     try {
       await deleteDoc(linkDoc);
-      toast.success("Successfully Deleted", autoClose);
-      getLink();
     } catch (err) {
       console.log(err);
-      toast.error("Error", autoClose);
     }
   };
   const handleLatestDelete = async (id) => {
     const linkDoc = doc(db, "latestItems", id);
     try {
       await deleteDoc(linkDoc);
-      toast.success("Successfully Deleted", autoClose);
-      getLink();
     } catch (err) {
       console.log(err);
-      toast.error("Error", autoClose);
     }
   };
 
@@ -95,17 +90,69 @@ export default function ItemDetails() {
   };
 
   return (
-    <div className="min-h-[80vh] py-[1rem]">
+    <div className="min-h-[80vh] py-[1rem] xl:px-[12rem]">
       {item ? (
-        <div className="flex flex-col items-center sm:flex-row sm:items-start sm:gap-2 px-4">
-          <div className="image-container bg-[#eaeaea] w-[90%] h-[23rem] flex justify-center items-center lg:h-[30rem]">
-            <img
-              src={item.mainImageURL}
-              alt=""
-              className="h-[21rem] xl:h-[32rem] object-cover"
-            />
+        <div className="sm:flex items-center sm:flex-row sm:items-start sm:gap-2 px-4 w-screen">
+          <div className="image-container h-[26rem] sm:h-[30rem] flex gap-2 snap-x overflow-x-scroll sm:hidden">
+            <div className="flex-shrink-0 w-full flex justify-center items-center h-full bg-[#eaeaea]">
+              <img
+                src={item.mainImageURL}
+                alt=""
+                className="h-[21rem] xl:h-[40rem] object-cover"
+              />
+            </div>
+            {item.subImage1URL && (
+              <div className="flex-shrink-0 w-screen h-full flex justify-center items-center bg-[#eaeaea]">
+                <img
+                  src={item.subImage1URL}
+                  alt=""
+                  className="h-[21rem] object-cover"
+                />
+              </div>
+            )}
+            {item.subImage2URL && (
+              <div className="flex-shrink-0 w-screen h-full flex justify-center items-center bg-[#eaeaea]">
+                <img
+                  src={item.subImage2URL}
+                  alt=""
+                  className="h-[21rem] object-cover"
+                />
+              </div>
+            )}
           </div>
-          <div className="product-info px-4 w-full pt-4 sm:pt-0">
+
+          <div className="image-container hidden xl:flex sm:flex-col gap-2 xl:w-[65%]">
+            <div className="flex justify-center items-center h-[30rem] w-full bg-[#eaeaea]">
+              <img
+                src={item.mainImageURL}
+                alt=""
+                className="h-[21rem] xl:h-[40rem] object-cover"
+              />
+            </div>
+            {item.subImage1URL && (
+              <div className="flex gap-2 w-full h-[25rem]">
+                {item.subImage1URL && (
+                  <div className="bg-[#eaeaea] sm:w-[50%] h-full flex justify-center items-center">
+                    <img
+                      src={item.subImage1URL}
+                      alt=""
+                      className="h-[21rem] xl:h-[20rem] object-cover"
+                    />
+                  </div>
+                )}
+                {item.subImage2URL && (
+                  <div className="bg-[#eaeaea] w-[50%] h-full flex justify-center items-center">
+                    <img
+                      src={item.subImage2URL}
+                      alt=""
+                      className="h-[21rem] xl:h-[20rem] object-cover"
+                    />
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+          <div className="product-info px-4 sm:w-[35%] pt-4 sm:pt-0">
             <div>
               <p>𝟗ƑℲ</p>
               <h1 className="text-2xl tracking-widest">{item.name}</h1>
@@ -162,6 +209,7 @@ export default function ItemDetails() {
                 onClick={() => {
                   handleAllDelete(item.id);
                   handleLatestDelete(item.id);
+                  toast.success("Successfully Deleted", 300);
                 }}
                 className="border-2 border-red-500 border-solid h-[3rem] w-full text-red-500 tracking-wider uppercase flex justify-center items-center font-medium mt-[1rem]">
                 Delete Item

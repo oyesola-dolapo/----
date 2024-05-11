@@ -34,10 +34,10 @@ export default function Auth() {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       setLoginErr(false);
-      toast.success("Successfully signed in..");
+      toast.success("Successfully signed in..", 300);
     } catch (err) {
       console.log(err);
-      toast.error("Failed to sign in");
+      toast.error("Failed to sign in", 300);
       if (err.code === "auth/invalid-credential") {
         setLoginErr(true);
       }
@@ -47,9 +47,9 @@ export default function Auth() {
   const handleSignOut = async () => {
     try {
       await signOut(auth);
-      toast.success("Successfully signed out..");
+      toast.success("Successfully signed out..", 300);
     } catch (error) {
-      toast.error("Error signing out");
+      toast.error("Error signing out", 300);
     }
   };
 
