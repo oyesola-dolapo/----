@@ -3,6 +3,9 @@ import "./App.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthProvider } from "./components/AuthContext";
+import lottie from "lottie-web";
+import { defineElement } from "@lordicon/element";
+defineElement(lottie.loadAnimation);
 
 import Nav from "./components/Nav/Nav";
 import Home from "./components/Home/Home";

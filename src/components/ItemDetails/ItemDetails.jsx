@@ -13,6 +13,7 @@ export default function ItemDetails() {
   const [quantity, setQuantity] = useState(0);
   const [size, setSize] = useState("");
   const [sizeErr, setSizeErr] = useState(false);
+  const [quantityErr, setQuantityErr] = useState(false);
   const [cartShow, setCartShow] = useState(false);
 
   useEffect(() => {
@@ -97,6 +98,9 @@ export default function ItemDetails() {
     try {
       if (size === "") {
         setSizeErr(true);
+      }
+      if (quantity === 0) {
+        setQuantityErr(true);
       } else {
         await addDoc(cartRef, {
           name: item.name,
@@ -107,6 +111,7 @@ export default function ItemDetails() {
         });
         setSizeErr(false);
         setCartShow(true);
+        setQuantityErr(false);
       }
     } catch (err) {
       toast.error("Error", 300);
@@ -210,7 +215,7 @@ export default function ItemDetails() {
                   </div>
                 </div>
                 <Link
-                  to=""
+                  to="/cart"
                   className="text-[1rem] flex tracking-wider border-2 border-black border-solid w-full h-[3rem] justify-center items-center mt-[2rem]">
                   View Cart
                 </Link>
@@ -277,6 +282,11 @@ export default function ItemDetails() {
                   onClick={incrementQuantity}
                 />
               </div>
+              {quantityErr && (
+                <div>
+                  <p>Select Quantity</p>
+                </div>
+              )}
             </div>
             <div className="mt-6">
               <button
@@ -303,8 +313,12 @@ export default function ItemDetails() {
           </div>
         </div>
       ) : (
-        <div className="text-center text-2xl font-medium opacity-[.6] py-12">
-          Loading...
+        <div className="flex justify-center w-full">
+          <lord-icon
+            src="https://cdn.lordicon.com/gkryirhd.json"
+            trigger="loop"
+            state="loop-rotation-three-quarters"
+            style={{ width: "40px", height: "40px" }}></lord-icon>
         </div>
       )}
     </div>
