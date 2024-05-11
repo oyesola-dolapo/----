@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
-    font-family: Helvetica;
+* {
+  font-family: Helvetica;
+}
+
+.image-container::-webkit-scrollbar {
+  display: none;
 }

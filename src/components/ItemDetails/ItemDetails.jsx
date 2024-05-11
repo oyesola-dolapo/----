@@ -93,7 +93,7 @@ export default function ItemDetails() {
     <div className="min-h-[80vh] py-[1rem] xl:px-[12rem]">
       {item ? (
         <div className="sm:flex items-center sm:flex-row sm:items-start sm:gap-2 px-4">
-          <div className="image-container h-[26rem] sm:h-[30rem] flex gap-2 snap-x overflow-x-scroll sm:hidden">
+          <div className=" h-[26rem] sm:h-[30rem] flex gap-2 snap-x overflow-x-scroll sm:hidden">
             <div className="flex-shrink-0 w-full flex justify-center items-center h-full bg-[#eaeaea]">
               <img
                 src={item.mainImageURL}
@@ -121,7 +121,7 @@ export default function ItemDetails() {
             )}
           </div>
 
-          <div className="image-container hidden xl:flex sm:flex-col gap-2 xl:w-[65%]">
+          <div className="image-container hidden sm:flex sm:flex-col gap-2 h-[30rem] md:h-[60rem] xl:h-[45rem] overflow-y-scroll sm:w-[50%] xl:w-[65%]">
             <div className="flex justify-center items-center h-[30rem] w-full bg-[#eaeaea]">
               <img
                 src={item.mainImageURL}
@@ -130,9 +130,9 @@ export default function ItemDetails() {
               />
             </div>
             {item.subImage1URL && (
-              <div className="flex gap-2 w-full h-[25rem]">
+              <div className="flex sm:flew-col xl:flex-row gap-2 w-full h-[25rem]">
                 {item.subImage1URL && (
-                  <div className="bg-[#eaeaea] sm:w-[50%] h-full flex justify-center items-center">
+                  <div className="bg-[#eaeaea] w-full xl:w-[50%] h-full flex justify-center items-center">
                     <img
                       src={item.subImage1URL}
                       alt=""
@@ -141,7 +141,7 @@ export default function ItemDetails() {
                   </div>
                 )}
                 {item.subImage2URL && (
-                  <div className="bg-[#eaeaea] w-[50%] h-full flex justify-center items-center">
+                  <div className="bg-[#eaeaea] xl:w-[50%] h-full flex justify-center items-center">
                     <img
                       src={item.subImage2URL}
                       alt=""
@@ -152,7 +152,7 @@ export default function ItemDetails() {
               </div>
             )}
           </div>
-          <div className="product-info px-4 sm:w-[35%] pt-4 sm:pt-0">
+          <div className="product-info px-4 sm:w-[50%] xl:w-[35%] pt-4 sm:pt-0">
             <div>
               <p>𝟗ƑℲ</p>
               <h1 className="text-2xl tracking-widest">{item.name}</h1>
