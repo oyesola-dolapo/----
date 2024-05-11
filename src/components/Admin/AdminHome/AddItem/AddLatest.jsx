@@ -3,6 +3,8 @@ import { toast } from "react-toastify";
 import { db, storage } from "../../../../Config/firebase";
 import { addDoc, collection } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { useAuth } from "../../../AuthContext";
+import { Link } from "react-router-dom";
 
 export default function AddLatest() {
   const [img, setImg] = useState(null);
@@ -17,6 +19,7 @@ export default function AddLatest() {
   const [categories, setCategories] = useState("");
   const [error, setError] = useState("");
   const [progress, setProgress] = useState("");
+  const { currentUser } = useAuth();
 
   const types = ["image/png", "image/jpeg", "image/webp"];
 
@@ -197,72 +200,85 @@ export default function AddLatest() {
 
   return (
     <div className="py-[1rem] sm:flex sm:flex-col sm:items-center px-[.8rem] min-h-[80vh]">
-      <h1 className="text-center text-[1.2rem] font-medium mb-[1rem] uppercase">
-        Add Latest Items
-      </h1>
-      <form
-        action=""
-        onSubmit={uploadItem}
-        className="w-full sm:w-[70%] xl:w-[50%] flex flex-col items-center justify-center">
+      {currentUser ? (
         <div>
-          <label for="category" className="mr-[.4rem]">
-            choose a category:
-          </label>
+          <h1 className="text-center text-[1.2rem] font-medium mb-[1rem] uppercase">
+            Add Latest Items
+          </h1>
+          <form
+            action=""
+            onSubmit={uploadItem}
+            className="w-full sm:w-[70%] xl:w-[50%] flex flex-col items-center justify-center">
+            <div>
+              <label for="category" className="mr-[.4rem]">
+                choose a category:
+              </label>
 
-          <select
-            id="category"
-            name="category"
-            onChange={handleCategories}
-            value={categories}
-            required>
-            <option value="" disabled unselected>
-              Select
-            </option>
-            {options.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.value}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="w-full">
-          {images.map((image) => {
-            return (
-              <div className="my-[.5rem]">
-                <input type={image.type} onChange={image.input} id="file" />
-              </div>
-            );
-          })}
-          <p className="text-red-500">{error}</p>
-        </div>
+              <select
+                id="category"
+                name="category"
+                onChange={handleCategories}
+                value={categories}
+                required>
+                <option value="" disabled unselected>
+                  Select
+                </option>
+                {options.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.value}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="w-full">
+              {images.map((image) => {
+                return (
+                  <div className="my-[.5rem]">
+                    <input type={image.type} onChange={image.input} id="file" />
+                  </div>
+                );
+              })}
+              <p className="text-red-500">{error}</p>
+            </div>
 
-        <div className="mt-[.6rem] w-full">
-          {forms.map((form) => {
-            return (
-              <div className="flex flex-col mb-[.6rem]">
-                <label htmlFor={form.title} className="font-medium">
-                  {form.title}{" "}
-                  <span className="font-bold text-[#ff0000]">*</span>
-                </label>
-                <input
-                  type={form.type}
-                  onChange={form.input}
-                  value={form.value}
-                  required
-                  className="border-[2px] border-solid border-black w-full h-[3rem] px-[1rem]"
-                  placeholder={`Enter ${form.title}`}
-                />
-              </div>
-            );
-          })}
+            <div className="mt-[.6rem] w-full">
+              {forms.map((form) => {
+                return (
+                  <div className="flex flex-col mb-[.6rem]">
+                    <label htmlFor={form.title} className="font-medium">
+                      {form.title}{" "}
+                      <span className="font-bold text-[#ff0000]">*</span>
+                    </label>
+                    <input
+                      type={form.type}
+                      onChange={form.input}
+                      value={form.value}
+                      required
+                      className="border-[2px] border-solid border-black w-full h-[3rem] px-[1rem]"
+                      placeholder={`Enter ${form.title}`}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+            <button
+              type="submit"
+              className="bg-black text-white w-full py-[.6rem] mt-[.6rem] border-none text-[1.2rem]">
+              Add
+            </button>
+            <p>{progress}</p>
+          </form>
         </div>
-        <button
-          type="submit"
-          className="bg-black text-white w-full py-[.6rem] mt-[.6rem] border-none text-[1.2rem]">
-          Add
-        </button>
-        <p>{progress}</p>
-      </form>
+      ) : (
+        <div className="flex flex-col items-center gap-2">
+          <p className="text-[1.2rem] tracking-wider uppercase">
+            Login to add Item
+          </p>
+          <Link to="/admin" className="tracking-wider text-[1.2rem] underline">
+            Login
+          </Link>
+        </div>
+      )}
     </div>
   );
 }
