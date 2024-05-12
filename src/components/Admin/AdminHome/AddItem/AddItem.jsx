@@ -18,6 +18,7 @@ export default function AddItem() {
   const [error, setError] = useState("");
   const [progress, setProgress] = useState("");
   const { currentUser } = useAuth();
+  const [loader, setLoader] = useState(false);
 
   const types = ["image/png", "image/jpeg", "image/webp"];
 
@@ -65,84 +66,82 @@ export default function AddItem() {
     setCategories(e.target.value);
   };
 
-  const uploadItem = (e) => {
+  const uploadItem = async (e) => {
     e.preventDefault();
-    const mainUploadTask = storage.ref(`items/${img.name}`).put(img);
 
-    mainUploadTask.on(
-      "state_changed",
-      (snapshot) => {
+    try {
+      setLoader(true);
+      const mainUploadTask = storage.ref(`items/${img.name}`).put(img);
+
+      mainUploadTask.on("state_changed", (snapshot) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log(`Uploading item: ${progress}% done`);
         setProgress(`Uploading item: ${progress}% done`);
-      },
-      (err) => {
-        setError(err.message);
-      },
-      () => {
-        storage
-          .ref(`items/${img.name}`)
-          .getDownloadURL()
-          .then((mainUrl) => {
-            const promises = [];
+      });
 
-            if (img2) {
-              const sub1UploadTask = storage
-                .ref(`items/${img2.name}`)
-                .put(img2);
-              promises.push(sub1UploadTask);
-            }
+      const mainUrl = await new Promise((resolve, reject) => {
+        mainUploadTask.on(
+          "state_changed",
+          null,
+          (err) => {
+            setError(err.message);
+            reject(err);
+          },
+          () => {
+            storage
+              .ref(`items/${img.name}`)
+              .getDownloadURL()
+              .then(resolve)
+              .catch(reject);
+          }
+        );
+      });
 
-            if (img3) {
-              const sub2UploadTask = storage
-                .ref(`items/${img3.name}`)
-                .put(img3);
-              promises.push(sub2UploadTask);
-            }
+      const promises = [];
 
-            Promise.all(promises)
-              .then((results) => {
-                const urls = [];
-                results.forEach((taskResult) => {
-                  urls.push(taskResult.ref.getDownloadURL());
-                });
-
-                return Promise.all(urls);
-              })
-              .then((downloadUrls) => {
-                const sub1Url = downloadUrls[0] || null;
-                const sub2Url = downloadUrls[1] || null;
-
-                db.collection("items")
-                  .add({
-                    mainImageURL: mainUrl,
-                    subImage1URL: sub1Url,
-                    subImage2URL: sub2Url,
-                    name: name,
-                    desc: desc,
-                    price: price,
-                    categories: categories,
-                  })
-                  .then(() => {
-                    toast.success("Successfully Added", 300);
-                    setName("");
-                    setPrice("");
-                    setDesc("");
-                    setCategories("");
-                    document.getElementById("file").value = "";
-                    setProgress("");
-                  })
-                  .catch((err) => {
-                    console.log(err.message);
-                    toast.error("Error adding item", 300);
-                  });
-              })
-              .catch((err) => console.log(err.message));
-          })
-          .catch((err) => console.log(err.message));
+      if (img2) {
+        const sub1UploadTask = storage.ref(`items/${img2.name}`).put(img2);
+        promises.push(sub1UploadTask);
       }
-    );
+
+      if (img3) {
+        const sub2UploadTask = storage.ref(`items/${img3.name}`).put(img3);
+        promises.push(sub2UploadTask);
+      }
+
+      const results = await Promise.all(promises);
+
+      const urls = await Promise.all(
+        results.map((taskResult) => taskResult.ref.getDownloadURL())
+      );
+
+      const sub1Url = urls[0] || null;
+      const sub2Url = urls[1] || null;
+
+      await db.collection("items").add({
+        mainImageURL: mainUrl,
+        subImage1URL: sub1Url,
+        subImage2URL: sub2Url,
+        name: name,
+        desc: desc,
+        price: price,
+        categories: categories,
+      });
+
+      toast.success("Successfully Added", 300);
+      setName("");
+      setPrice("");
+      setDesc("");
+      setCategories("");
+      document.getElementById("file").value = "";
+      setProgress("");
+    } catch (err) {
+      console.log(err.message);
+      toast.error("Error adding item", 300);
+    } finally {
+      setLoader(false);
+    }
   };
 
   const forms = [
@@ -263,12 +262,22 @@ export default function AddItem() {
                 );
               })}
             </div>
+
             <button
               type="submit"
-              className="bg-black text-white w-full py-[.6rem] mt-[.6rem] border-none text-[1.2rem]">
-              Add
+              disabled={loader}
+              className="bg-black text-white w-full h-[3rem] mt-[.6rem] border-none text-[1.2rem]">
+              {loader ? (
+                <lord-icon
+                  src="https://cdn.lordicon.com/gkryirhd.json"
+                  trigger="loop"
+                  state="loop-rotation-three-quarters"
+                  colors="primary:#ffffff"
+                  style={{ width: "40px", height: "40px" }}></lord-icon>
+              ) : (
+                <p>Add</p>
+              )}
             </button>
-            <p>{progress}</p>
           </form>{" "}
         </div>
       ) : (
