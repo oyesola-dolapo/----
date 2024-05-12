@@ -57,9 +57,12 @@ export default function ItemDetails() {
   const handleLatestDelete = async (id) => {
     const linkDoc = doc(db, "latestItems", id);
     try {
+      setLoader(true);
       await deleteDoc(linkDoc);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -296,6 +299,7 @@ export default function ItemDetails() {
             <div className="mt-6">
               <button
                 onClick={addCart}
+                disabled={loader}
                 className="cart-btn w-full h-14 mb-2 border-2 border-black text-lg tracking-wider">
                 {loader ? (
                   <lord-icon
@@ -313,15 +317,25 @@ export default function ItemDetails() {
               <p className="opacity-[.7] mt-4">{item.desc}</p>
             </div>
             {currentUser && (
-              <div
+              <button
                 onClick={() => {
                   handleAllDelete(item.id);
                   handleLatestDelete(item.id);
                   toast.success("Successfully Deleted", 300);
                 }}
-                className="border-2 border-red-500 border-solid h-[3rem] w-full text-red-500 tracking-wider uppercase flex justify-center items-center font-medium mt-[1rem]">
-                Delete Item
-              </div>
+                disabled={loader}
+                className="border-2 border-red-500 border-solid cursor-pointer h-[3rem] w-full text-red-500 tracking-wider uppercase flex justify-center items-center font-medium mt-[1rem]">
+                {loader ? (
+                  <lord-icon
+                    src="https://cdn.lordicon.com/gkryirhd.json"
+                    trigger="loop"
+                    state="loop-rotation-three-quarters"
+                    colors="primary:#e83a30"
+                    style={{ width: "40px", height: "40px" }}></lord-icon>
+                ) : (
+                  <p>Delete Item</p>
+                )}
+              </button>
             )}
           </div>
         </div>
