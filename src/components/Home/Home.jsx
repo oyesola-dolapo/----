@@ -50,7 +50,7 @@ export default function Home() {
                     <img
                       src={item.mainImageURL}
                       alt=""
-                      className="h-[14rem] md:h-[25rem] object-cover"
+                      className="w-[14rem] md:w-[25rem] object-cover"
                     />
                   </div>
                   <p className="tracking-wider my-[.6rem] text-[.8rem]">
