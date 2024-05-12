@@ -133,7 +133,7 @@ export default function ItemDetails() {
               <img
                 src={item.mainImageURL}
                 alt=""
-                className="h-[25rem] xl:h-[40rem] object-cover"
+                className="w-[25rem] object-cover"
               />
             </div>
             {item.subImage1URL && (
@@ -141,7 +141,7 @@ export default function ItemDetails() {
                 <img
                   src={item.subImage1URL}
                   alt=""
-                  className="h-[21rem] object-cover"
+                  className="w-[22rem] object-cover"
                 />
               </div>
             )}
@@ -150,7 +150,7 @@ export default function ItemDetails() {
                 <img
                   src={item.subImage2URL}
                   alt=""
-                  className="h-[21rem] object-cover"
+                  className="w-[22rem] object-cover"
                 />
               </div>
             )}
@@ -161,7 +161,7 @@ export default function ItemDetails() {
               <img
                 src={item.mainImageURL}
                 alt=""
-                className="h-[32rem] object-cover"
+                className="h-[25rem] object-cover"
               />
             </div>
             {item.subImage1URL && (
@@ -171,7 +171,7 @@ export default function ItemDetails() {
                     <img
                       src={item.subImage1URL}
                       alt=""
-                      className="h-[21rem] xl:h-[20rem] object-cover"
+                      className="w-[20rem] object-cover"
                     />
                   </div>
                 )}
@@ -180,7 +180,7 @@ export default function ItemDetails() {
                     <img
                       src={item.subImage2URL}
                       alt=""
-                      className="h-[21rem] xl:h-[20rem] object-cover"
+                      className="w-[20rem] object-cover"
                     />
                   </div>
                 )}
@@ -209,7 +209,7 @@ export default function ItemDetails() {
                     <img
                       src={item.mainImageURL}
                       alt=""
-                      className="h-[5rem] object-cover"
+                      className="w-[5rem] object-cover"
                     />
                   </div>
                   <div className="w-full">
