@@ -36,8 +36,8 @@ export default function LatestProducts() {
             return (
               <Link
                 to={`/item/${item.id}`}
-                className="flex flex-col overflow-hidden w-[45%] xl:max-w-[15rem] xl:min-w-[15rem] mb-[1rem]">
-                <div className="bg-black bg-opacity-[.1] flex items-center justify-center px-2 h-[15rem] md:h-[30rem] xl:max-h-[21rem] xl:min-h-[21rem] w-full">
+                className="flex flex-col overflow-hidden w-[49%] xl:w-[17rem]  mb-[1rem]">
+                <div className="bg-black bg-opacity-[.1] flex items-center justify-center px-2 h-[15rem] md:h-[30rem] xl:h-[21rem] w-full">
                   <img
                     src={item.mainImageURL}
                     alt=""
