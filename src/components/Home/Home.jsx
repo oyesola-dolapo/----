@@ -40,7 +40,7 @@ export default function Home() {
           <p className="tracking-wider text-[1.7rem] text-center mb-[1rem]">
             LATEST COLLECTION
           </p>
-          <div className=" flex justify-between xl:justify-start flex-wrap mt-[1rem] md:px-[2rem]">
+          <div className=" flex justify-between xl:justify-start flex-wrap mt-[1rem] md:px-[2rem] xl:gap-4">
             {latestItems.map((item) => {
               return (
                 <Link

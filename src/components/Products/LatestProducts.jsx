@@ -31,7 +31,7 @@ export default function LatestProducts() {
         Latest Drop
       </p>
       {items.length > 0 ? (
-        <div className=" flex justify-between xl:justify-start flex-wrap mt-[1rem] md:px-[2rem]">
+        <div className=" flex justify-between xl:justify-start flex-wrap mt-[1rem] md:px-[2rem] xl:gap-4">
           {items.map((item) => {
             return (
               <Link
